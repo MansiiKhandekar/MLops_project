@@ -1,0 +1,55 @@
+name: MLOps CI/CD Pipeline
+
+# Trigger the workflow on pushes to the main branch
+on:
+  push:
+    branches: [ main, master ]
+    # Only trigger when files in these paths change
+    paths:
+      - 'src/**'
+      - 'data/**'
+      - 'app.py'
+  # Also allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Train the Model
+      run: |
+        # Run the training script. This will create models/model.pkl
+        python src/train.py
+
+    - name: Run Tests
+      run: |
+        # Run pytest to verify model creation and basic predictions
+        pytest tests/
+
+    - name: Evaluate Model and Generate Metrics
+      run: |
+        # Run evaluation to calculate accuracy and generate metrics.txt
+        python src/evaluate.py
+        
+    - name: Display Metrics
+      run: |
+        # Print the contents of metrics.txt to the GitHub Actions logs
+        cat metrics.txt
+
+    # In a real-world scenario, you would add steps here to deploy the model
+    # or the Streamlit app to a hosting service like Streamlit Community Cloud, Heroku, or AWS.
+    # For this beginner project, demonstrating the automated retraining and testing is sufficient.
