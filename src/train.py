@@ -15,7 +15,7 @@ def train_model():
     # We are using a Random Forest Classifier.
     # To demonstrate a source code change, you can modify 'n_estimators' or 'max_depth'
     # Example: change n_estimators=100 to n_estimators=10
-    model = RandomForestClassifier(n_estimators=50, max_depth=2, random_state=42)
+    model = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=42)
     
     # 3. Train the model on the training data
     print("Training model...")
