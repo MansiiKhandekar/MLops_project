@@ -93,6 +93,32 @@ streamlit run app.py
 ```
 This will open the web app in your browser (usually `http://localhost:8501`).
 
+### 6. Docker Containerization (Optional)
+If you need to run this project in a container:
+```bash
+# Build the Docker image
+docker build -t diabetes-predictor:latest .
+
+# Run the container
+docker run -p 8501:8501 diabetes-predictor:latest
+```
+
+### 7. Kubernetes Deployment (Optional)
+To deploy this on a local Kubernetes cluster (like Minikube):
+```bash
+# Apply the deployment
+kubectl apply -f k8s/deployment.yaml
+
+# Apply the service
+kubectl apply -f k8s/service.yaml
+
+# Check running pods
+kubectl get pods
+
+# Expose the service (if using Minikube)
+minikube service mlops-diabetes-service
+```
+
 ---
 
 ## 🧪 Demonstration Scenarios
